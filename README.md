@@ -1,73 +1,102 @@
-# Welcome to your Lovable project
 
-## Project info
+# Cosmic Nexus Blockchain Project
 
-**URL**: https://lovable.dev/projects/d11811ad-6d07-4ced-84dc-030018846630
+## Overview
 
-## How can I edit this code?
+Cosmic Nexus is a professional-grade blockchain project that combines features from Solana (Proof of History) and Binance Smart Chain (Proof of Stake), with an innovative integration of Docker-based Virtual Machine for IA (VMIA) for distributed computing.
 
-There are several ways of editing your application.
+## Key Technologies
 
-**Use Lovable**
+- **Hybrid Consensus Mechanism**: POHPOS (Proof of History + Proof of Stake)
+- **VMIA Docker Integration**: Allows users to contribute computing power and earn rewards
+- **DEX Platform**: Decentralized Exchange for trading Cosmic Nexus tokens
+- **Admin Dashboard**: Complete oversight of blockchain operations, nodes, and performance
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d11811ad-6d07-4ced-84dc-030018846630) and start prompting.
+## Project Components
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Core Blockchain** (Rust implementation, in progress)
+   - Consensus Engine (POHPOS)
+   - Transaction Processing
+   - Smart Contract Execution
 
-**Use your preferred IDE**
+2. **VMIA Docker System**
+   - Containerized computing nodes
+   - AI workload distribution
+   - Reward mechanisms
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. **Admin Dashboard**
+   - Blockchain statistics and monitoring
+   - Node management
+   - DEX prototype
+   - CLI access
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+4. **Client Application**
+   - Wallet connection (Solflare)
+   - VMIA Docker management
+   - Transaction history
+   - Reward tracking
 
-Follow these steps:
+## Getting Started
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Node.js and npm
+- Docker Desktop
+- Solflare wallet browser extension
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Installation
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/cosmic-nexus.git
+   cd cosmic-nexus
+   ```
 
-**Edit a file directly in GitHub**
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3. Start the development server:
+   ```
+   npm run dev
+   ```
 
-**Use GitHub Codespaces**
+4. Access the application at:
+   ```
+   http://localhost:5173
+   ```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Using the VMIA Docker Client
 
-## What technologies are used for this project?
+1. Install Docker on your machine
+2. Navigate to the Client page in the application
+3. Connect your Solflare wallet
+4. Click "Download Latest Image" to get the Docker image
+5. Start your Docker VMIA container
+6. Monitor your contributions and rewards
 
-This project is built with:
+## Current Status
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+This project is currently in prototype/development phase. The UI components are functional, but the backend blockchain implementation is still in progress.
 
-## How can I deploy this project?
+- [x] Admin Dashboard UI
+- [x] DEX Prototype UI
+- [x] Client App UI
+- [x] Wallet Integration
+- [ ] Rust Blockchain Core
+- [ ] VMIA Docker Image
+- [ ] Smart Contract Platform
+- [ ] Production Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/d11811ad-6d07-4ced-84dc-030018846630) and click on Share -> Publish.
+## Contributing
 
-## Can I connect a custom domain to my Lovable project?
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Yes, you can!
+## License
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Contact
+
+For any inquiries, please open an issue on this repository.

@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowUpDown, TrendingUp, TrendingDown, Clock, BarChart3 } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { WalletConnect } from "@/components/dex/WalletConnect";
+import { useDexData } from "@/hooks/useBlockchainData";
 
 const DexPage = () => {
   // Mock trading pair data
@@ -46,6 +48,8 @@ const DexPage = () => {
     { time: "12:38:45", pair: "CNX/USDT", price: "12.42", amount: "200.0", total: "2,484.00", type: "sell" },
     { time: "12:37:21", pair: "CNX/USDT", price: "12.40", amount: "67.2", total: "833.28", type: "buy" },
   ];
+
+  const { data: dexData, isLoading, error } = useDexData();
 
   return (
     <DashboardLayout>
@@ -112,68 +116,72 @@ const DexPage = () => {
 
           <Card className="col-span-1">
             <CardHeader>
-              <CardTitle>Trading</CardTitle>
-              <CardDescription>Buy & Sell CNX</CardDescription>
+              <CardTitle>Wallet & Trading</CardTitle>
+              <CardDescription>Connect wallet to trade</CardDescription>
             </CardHeader>
             <CardContent>
-              <Tabs defaultValue="buy" className="space-y-4">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="buy">Buy</TabsTrigger>
-                  <TabsTrigger value="sell">Sell</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="buy" className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Available</span>
-                      <span>24,560.75 USDT</span>
+              <WalletConnect />
+
+              <div className="mt-4">
+                <Tabs defaultValue="buy" className="space-y-4">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="buy">Buy</TabsTrigger>
+                    <TabsTrigger value="sell">Sell</TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="buy" className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Available</span>
+                        <span>24,560.75 USDT</span>
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <label className="text-xs text-muted-foreground">Price</label>
+                        <Input value="12.45" readOnly />
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <label className="text-xs text-muted-foreground">Amount (CNX)</label>
+                        <Input placeholder="0.00" />
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <label className="text-xs text-muted-foreground">Total (USDT)</label>
+                        <Input placeholder="0.00" />
+                      </div>
+                      
+                      <Button className="w-full bg-status-online hover:bg-status-online/90">Buy CNX</Button>
                     </div>
-                    
-                    <div className="space-y-1">
-                      <label className="text-xs text-muted-foreground">Price</label>
-                      <Input value="12.45" readOnly />
+                  </TabsContent>
+                  
+                  <TabsContent value="sell" className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Available</span>
+                        <span>5,245.32 CNX</span>
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <label className="text-xs text-muted-foreground">Price</label>
+                        <Input value="12.45" readOnly />
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <label className="text-xs text-muted-foreground">Amount (CNX)</label>
+                        <Input placeholder="0.00" />
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <label className="text-xs text-muted-foreground">Total (USDT)</label>
+                        <Input placeholder="0.00" />
+                      </div>
+                      
+                      <Button className="w-full bg-status-offline hover:bg-status-offline/90">Sell CNX</Button>
                     </div>
-                    
-                    <div className="space-y-1">
-                      <label className="text-xs text-muted-foreground">Amount (CNX)</label>
-                      <Input placeholder="0.00" />
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <label className="text-xs text-muted-foreground">Total (USDT)</label>
-                      <Input placeholder="0.00" />
-                    </div>
-                    
-                    <Button className="w-full bg-status-online hover:bg-status-online/90">Buy CNX</Button>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="sell" className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Available</span>
-                      <span>5,245.32 CNX</span>
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <label className="text-xs text-muted-foreground">Price</label>
-                      <Input value="12.45" readOnly />
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <label className="text-xs text-muted-foreground">Amount (CNX)</label>
-                      <Input placeholder="0.00" />
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <label className="text-xs text-muted-foreground">Total (USDT)</label>
-                      <Input placeholder="0.00" />
-                    </div>
-                    
-                    <Button className="w-full bg-status-offline hover:bg-status-offline/90">Sell CNX</Button>
-                  </div>
-                </TabsContent>
-              </Tabs>
+                  </TabsContent>
+                </Tabs>
+              </div>
             </CardContent>
           </Card>
         </div>

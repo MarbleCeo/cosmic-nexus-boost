@@ -39,3 +39,19 @@ export interface TokenData {
   name: string;
   value: number;
 }
+
+export interface WalletInfo {
+  address: string;
+  balance: string;
+  network: "mainnet" | "testnet" | "devnet";
+}
+
+export interface Transaction {
+  id: string;
+  from: string;
+  to: string;
+  amount: string;
+  timestamp: string;
+  status: "confirmed" | "pending" | "failed";
+  type: "transfer" | "swap" | "stake" | "unstake" | "vmia-reward";
+}

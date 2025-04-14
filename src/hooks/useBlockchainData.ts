@@ -1,6 +1,7 @@
 
 import { useQuery } from "@tanstack/react-query";
-import { BlockData, NetworkStats, NodeData, VmiaPerformance, TokenData } from "@/types/blockchain";
+import { BlockData, NetworkStats, NodeData, VmiaPerformance, TokenData, WalletInfo } from "@/types/blockchain";
+import { useMemo, useState } from "react";
 
 async function fetchBlocks(): Promise<BlockData[]> {
   // This would be replaced with your actual API call
@@ -41,6 +42,65 @@ async function fetchDexData(): Promise<TokenData[]> {
     throw new Error('Failed to fetch DEX data');
   }
   return response.json();
+}
+
+// Mock implementation of the Solflare wallet connection
+export function useSolflareWallet() {
+  const [connected, setConnected] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [wallet, setWallet] = useState<WalletInfo | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const connect = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Check if Solflare is installed
+      if (typeof window !== 'undefined' && 'solflare' in window) {
+        // @ts-ignore - Solflare is injected into the window object
+        const solflare = window.solflare;
+        
+        // Try to connect
+        await solflare.connect();
+        
+        // Get the wallet info
+        const publicKey = await solflare.publicKey.toString();
+        
+        setWallet({
+          address: publicKey,
+          balance: "0.00",
+          network: "devnet",
+        });
+        
+        setConnected(true);
+      } else {
+        setError("Solflare wallet not found. Please install the Solflare extension.");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to connect to Solflare");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const disconnect = () => {
+    if (typeof window !== 'undefined' && 'solflare' in window) {
+      // @ts-ignore
+      window.solflare.disconnect();
+    }
+    setConnected(false);
+    setWallet(null);
+  };
+
+  return {
+    connect,
+    disconnect,
+    connected,
+    loading,
+    wallet,
+    error,
+  };
 }
 
 export function useBlocks() {

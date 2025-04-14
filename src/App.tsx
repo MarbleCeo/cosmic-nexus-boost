@@ -10,6 +10,7 @@ import NodesPage from "./pages/NodesPage";
 import DockerPage from "./pages/DockerPage";
 import DexPage from "./pages/DexPage";
 import CliPage from "./pages/CliPage";
+import ClientPage from "./pages/ClientPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,8 @@ const App = () => (
           <Route path="/docker" element={<DockerPage />} />
           <Route path="/dex" element={<DexPage />} />
           <Route path="/cli" element={<CliPage />} />
+          <Route path="/client" element={<ClientPage />} />
+          <Route path="/settings" element={<ClientPage />} /> {/* Temporary redirect to client page */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

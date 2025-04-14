@@ -1,0 +1,307 @@
+
+# COSMIC NEXUS - COMPREHENSIVE GUIDE
+
+## INTRODUCTION
+
+Welcome to Cosmic Nexus, a next-generation blockchain platform with integrated AI capabilities through VMIA (Virtual Machine for IA) Docker containers. This guide covers installation, usage, and development information for all components of the ecosystem.
+
+## TABLE OF CONTENTS
+
+1. ARCHITECTURE OVERVIEW
+2. INSTALLATION INSTRUCTIONS
+   - 2.1 Validator Node Setup
+   - 2.2 VMIA Docker Client Setup 
+   - 2.3 Developer Environment
+3. USAGE GUIDES
+   - 3.1 Admin Dashboard
+   - 3.2 VMIA Client App
+   - 3.3 DEX Platform
+   - 3.4 Wallet Integration
+4. CLI COMMANDS
+5. CONFIGURATION
+6. DEPLOYMENT
+7. TROUBLESHOOTING
+
+## 1. ARCHITECTURE OVERVIEW
+
+Cosmic Nexus combines three consensus mechanisms:
+
+- Proof of History (PoH): Provides a verifiable time source for transaction ordering
+- Proof of Stake (PoS): Secures the network through validator stake
+- VMIA (Docker): Distributed computing resources for AI tasks
+
+The system comprises:
+- Core blockchain nodes (validators)
+- VMIA Docker nodes (client-operated)
+- API and RPC services
+- Admin Dashboard
+- Client App & DEX
+
+## 2. INSTALLATION INSTRUCTIONS
+
+### 2.1 Validator Node Setup
+
+Prerequisites:
+- 8+ CPU cores, 32GB+ RAM, 1TB SSD
+- Ubuntu 20.04 or newer
+- Rust 1.70+
+
+Installation:
+```bash
+# Clone repository
+git clone https://github.com/cosmic-nexus/validator
+cd validator
+
+# Install dependencies
+sudo apt update
+sudo apt install -y build-essential pkg-config libssl-dev
+
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env
+
+# Build validator
+cargo build --release
+
+# Initialize validator (generates identity and config)
+./target/release/cosmic-validator init
+
+# Start validator
+./target/release/cosmic-validator start
+```
+
+### 2.2 VMIA Docker Client Setup
+
+Prerequisites:
+- Docker Engine 20.10+
+- 4GB+ RAM available for Docker
+- Solflare wallet
+
+Installation:
+```bash
+# Install Docker (if not already installed)
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+# Pull VMIA Docker image
+docker pull cosmicnexus/vmia:latest
+
+# Start VMIA container
+docker run -d \
+  --name cosmic-vmia \
+  --restart unless-stopped \
+  -e WALLET_ADDRESS=your_solflare_address \
+  -e NETWORK=devnet \
+  -e CPU_LIMIT=70 \
+  -e MEMORY_LIMIT=60 \
+  cosmicnexus/vmia:latest
+
+# Check logs
+docker logs -f cosmic-vmia
+```
+
+Alternatively, use the VMIA Client App at https://app.cosmicnexus.network for a graphical interface.
+
+### 2.3 Developer Environment
+
+Prerequisites:
+- Node.js 16+
+- Rust 1.70+
+- Docker
+
+Setup:
+```bash
+# Clone frontend repository
+git clone https://github.com/cosmic-nexus/frontend
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Clone backend repository
+git clone https://github.com/cosmic-nexus/backend
+cd backend
+
+# Build Rust backend
+cargo build
+
+# Start development backend
+cargo run
+```
+
+## 3. USAGE GUIDES
+
+### 3.1 Admin Dashboard
+
+The Admin Dashboard provides comprehensive control and monitoring:
+
+- **Blockchain Explorer**: View blocks, transactions, and validators
+- **Network Statistics**: Monitor TPS, block time, and validators
+- **Docker VMIA**: Manage VMIA Docker containers
+- **DEX Platform**: Access trading interface
+- **CLI Terminal**: Execute commands directly in browser
+
+Access the Admin Dashboard at https://admin.cosmicnexus.network
+
+### 3.2 VMIA Client App
+
+The VMIA Client App allows users to:
+
+- Connect Solflare wallet
+- Download and run VMIA Docker containers
+- Monitor contribution and rewards
+- View transaction history
+- Adjust resource allocation
+
+Access the VMIA Client App at https://app.cosmicnexus.network
+
+### 3.3 DEX Platform
+
+The DEX interface provides:
+
+- Trading pairs with CNX token
+- Real-time price charts
+- Order book and history
+- Wallet connection via Solflare
+- Buy/sell functionality
+
+Access the DEX at https://dex.cosmicnexus.network
+
+### 3.4 Wallet Integration
+
+Cosmic Nexus supports Solflare wallet:
+
+1. Install Solflare extension from https://solflare.com
+2. Create or import a wallet
+3. Connect to Cosmic Nexus apps when prompted
+4. Sign transactions when required
+5. View balances and history in-app
+
+## 4. CLI COMMANDS
+
+The Cosmic Nexus CLI provides powerful command-line controls:
+
+```
+# General commands
+cosmic-cli status                    # Check blockchain status
+cosmic-cli balance <address>         # Check wallet balance
+cosmic-cli tx <hash>                 # View transaction details
+
+# Validator commands
+cosmic-cli validator:start           # Start validator
+cosmic-cli validator:stop            # Stop validator
+cosmic-cli validator:info            # Show validator info
+
+# VMIA commands
+cosmic-cli vmia:list                 # List active VMIA nodes
+cosmic-cli vmia:start                # Start VMIA container
+cosmic-cli vmia:stop                 # Stop VMIA container
+cosmic-cli vmia:rewards <address>    # View VMIA rewards
+
+# Development commands
+cosmic-cli dev:deploy <contract>     # Deploy smart contract
+cosmic-cli dev:compile <source>      # Compile contract source
+cosmic-cli dev:test <contract>       # Run contract tests
+```
+
+## 5. CONFIGURATION
+
+### Validator Configuration (config.toml)
+
+```toml
+[network]
+name = "devnet"  # mainnet, testnet, devnet
+rpc_port = 8899
+p2p_port = 8900
+
+[validator]
+identity = "/path/to/validator-keypair.json"
+vote_account = "/path/to/vote-account-keypair.json"
+ledger = "/path/to/ledger"
+log_level = "info"  # debug, info, warn, error
+
+[consensus]
+poh_tick_rate = 2500000  # ticks per second
+slots_per_epoch = 432000
+```
+
+### VMIA Docker Configuration
+
+```
+# Docker environment variables
+WALLET_ADDRESS=your_solflare_address   # Required
+NETWORK=devnet                         # devnet, testnet, mainnet
+CPU_LIMIT=70                           # CPU usage percentage limit
+MEMORY_LIMIT=60                        # Memory usage percentage limit
+LOG_LEVEL=info                         # debug, info, warn, error
+AUTO_UPDATE=true                       # Auto-update VMIA container
+```
+
+## 6. DEPLOYMENT
+
+### Mainnet Deployment
+
+```bash
+# Deploy validator to mainnet
+cosmic-cli deploy --network mainnet --identity /path/to/keypair.json
+
+# Start validator
+cosmic-cli validator:start --network mainnet
+
+# Deploy VMIA to mainnet
+docker run -d \
+  --name cosmic-vmia \
+  --restart unless-stopped \
+  -e WALLET_ADDRESS=your_solflare_address \
+  -e NETWORK=mainnet \
+  cosmicnexus/vmia:latest
+```
+
+### Cloud Deployment
+
+Terraform scripts for AWS, GCP, and Azure are available in the `/deploy` directory.
+
+Example AWS deployment:
+```bash
+cd deploy/aws
+terraform init
+terraform apply -var="region=us-west-2" -var="instance_type=c5.4xlarge"
+```
+
+## 7. TROUBLESHOOTING
+
+### Common Issues
+
+1. **Validator won't start**
+   - Check disk space
+   - Verify keypair permissions
+   - Ensure ports are open in firewall
+
+2. **VMIA Docker container crashes**
+   - Check Docker logs: `docker logs cosmic-vmia`
+   - Verify wallet address is correct
+   - Ensure sufficient system resources
+
+3. **Wallet connection issues**
+   - Confirm Solflare extension is installed
+   - Try refreshing the page
+   - Check browser console for errors
+
+4. **Low VMIA rewards**
+   - Verify container is running and contributing
+   - Check network connectivity
+   - Ensure CPU and memory are available to Docker
+
+### Support
+
+- Discord: https://discord.gg/cosmicnexus
+- GitHub Issues: https://github.com/cosmic-nexus/issues
+- Email: support@cosmicnexus.network
+
+## LICENSE
+
+Cosmic Nexus is licensed under the MIT License.
+Copyright (c) 2025 Cosmic Nexus

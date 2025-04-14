@@ -1,102 +1,134 @@
 
-# Cosmic Nexus Blockchain Project
+# Cosmic Nexus Blockchain Platform
 
 ## Overview
 
-Cosmic Nexus is a professional-grade blockchain project that combines features from Solana (Proof of History) and Binance Smart Chain (Proof of Stake), with an innovative integration of Docker-based Virtual Machine for IA (VMIA) for distributed computing.
+Cosmic Nexus is a hybrid blockchain platform combining the best features of Solana (Proof of History) and Binance Smart Chain (Proof of Stake), enhanced with a revolutionary Virtual Machine for IA (VMIA) system implemented via Docker containers. This architecture enables distributed AI processing while maintaining blockchain security and performance.
 
-## Key Technologies
+## Architecture
 
-- **Hybrid Consensus Mechanism**: POHPOS (Proof of History + Proof of Stake)
-- **VMIA Docker Integration**: Allows users to contribute computing power and earn rewards
-- **DEX Platform**: Decentralized Exchange for trading Cosmic Nexus tokens
-- **Admin Dashboard**: Complete oversight of blockchain operations, nodes, and performance
+### Core Components
 
-## Project Components
+1. **Consensus Mechanism**: 
+   - **PoH (Proof of History)**: Provides a cryptographic time source for transaction ordering
+   - **PoS (Proof of Stake)**: For validator election and network security
+   - **VMIA (Virtual Machine for IA)**: Docker-based distributed computing layer for AI tasks
 
-1. **Core Blockchain** (Rust implementation, in progress)
-   - Consensus Engine (POHPOS)
-   - Transaction Processing
-   - Smart Contract Execution
+2. **Node Types**:
+   - **Validator Nodes**: PoH and PoS validators responsible for block production and consensus
+   - **VMIA Nodes**: Client-operated Docker containers that contribute computing resources
+   - **RPC Nodes**: For transaction submission and blockchain queries
 
-2. **VMIA Docker System**
-   - Containerized computing nodes
-   - AI workload distribution
-   - Reward mechanisms
+3. **Token Economics**:
+   - **CNX Token**: Native cryptocurrency for transactions, staking, and VMIA rewards
+   - **Staking**: Validator stake for network security
+   - **VMIA Rewards**: Compensation for contributing computing resources
 
-3. **Admin Dashboard**
-   - Blockchain statistics and monitoring
-   - Node management
-   - DEX prototype
-   - CLI access
+## Implementation
 
-4. **Client Application**
-   - Wallet connection (Solflare)
-   - VMIA Docker management
-   - Transaction history
-   - Reward tracking
+### Backend (Rust)
+
+- **Blockchain Core**: Custom Rust implementation inspired by Solana architecture
+- **VMIA Protocol**: Docker-based containerization with secure AI task execution
+- **Smart Contracts**: Support for Solana-compatible programs and BSC-style contracts
+
+### Frontend (React)
+
+- **Admin Dashboard**: Complete monitoring and management interface for validators
+- **Client App**: User interface for participating in the VMIA network
+- **DEX Interface**: Trading platform for CNX and other tokens
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js and npm
-- Docker Desktop
-- Solflare wallet browser extension
+- **For Validators**: 
+  - High-performance server with 8+ CPU cores, 32GB+ RAM
+  - Ubuntu 20.04 or newer
+  - Rust 1.70+
+
+- **For VMIA Contributors**:
+  - Any system with Docker support
+  - At least 4GB RAM available for Docker
+  - Stable internet connection
+  - Solflare wallet
 
 ### Installation
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/cosmic-nexus.git
-   cd cosmic-nexus
-   ```
+#### Validator Setup
 
-2. Install dependencies:
-   ```
-   npm install
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/cosmic-nexus/validator
+cd validator
 
-3. Start the development server:
-   ```
-   npm run dev
-   ```
+# Install dependencies
+sudo apt update
+sudo apt install -y build-essential pkg-config libssl-dev
 
-4. Access the application at:
-   ```
-   http://localhost:5173
-   ```
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env
 
-### Using the VMIA Docker Client
+# Build validator node
+cargo build --release
 
-1. Install Docker on your machine
-2. Navigate to the Client page in the application
-3. Connect your Solflare wallet
-4. Click "Download Latest Image" to get the Docker image
-5. Start your Docker VMIA container
-6. Monitor your contributions and rewards
+# Configure validator
+cp config.example.toml config.toml
+# Edit config.toml with your validator settings
 
-## Current Status
+# Start validator
+./target/release/cosmic-validator --config config.toml
+```
 
-This project is currently in prototype/development phase. The UI components are functional, but the backend blockchain implementation is still in progress.
+#### VMIA Client Setup
 
-- [x] Admin Dashboard UI
-- [x] DEX Prototype UI
-- [x] Client App UI
-- [x] Wallet Integration
-- [ ] Rust Blockchain Core
-- [ ] VMIA Docker Image
-- [ ] Smart Contract Platform
-- [ ] Production Deployment
+```bash
+# Install Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
 
-## Contributing
+# Pull VMIA Docker image
+docker pull cosmicnexus/vmia:latest
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+# Start VMIA container
+docker run -d \
+  --name cosmic-vmia \
+  --restart unless-stopped \
+  -e WALLET_ADDRESS=your_solflare_address \
+  -e NETWORK=devnet \
+  cosmicnexus/vmia:latest
+```
+
+## Dashboard Access
+
+- **Admin Dashboard**: https://admin.cosmicnexus.network
+- **Client Portal**: https://app.cosmicnexus.network
+
+## API Documentation
+
+RESTful API endpoints are available for blockchain interaction:
+
+- `/api/blocks`: Retrieve latest blocks
+- `/api/network/stats`: Get network statistics
+- `/api/nodes`: List active validator nodes
+- `/api/vmia/performance`: Get VMIA network performance
+- `/api/dex/overview`: DEX market overview
+- `/api/wallet/{address}`: Wallet information
+- `/api/transactions`: Transaction history
+- `/api/vmia/client/{address}`: VMIA client status
+
+## Developer Resources
+
+- **SDK**: https://github.com/cosmic-nexus/sdk
+- **Documentation**: https://docs.cosmicnexus.network
+- **Discord**: https://discord.gg/cosmicnexus
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Contact
+## Acknowledgments
 
-For any inquiries, please open an issue on this repository.
+- Inspired by Solana and Binance Smart Chain architectures
+- Developed using Rust, React, and Docker technologies

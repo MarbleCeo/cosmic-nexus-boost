@@ -72,3 +72,49 @@ declare global {
     solflare?: SolflareWallet;
   }
 }
+
+// VMIA Docker Container types
+export interface VmiaContainer {
+  id: string;
+  status: "running" | "stopped" | "paused";
+  image: string;
+  cpuUsage: number;
+  memoryUsage: number;
+  rewards24h: string;
+  taskType: "ai-processing" | "data-validation" | "smart-contract" | "storage";
+  startTime: string;
+}
+
+// VMIA Client Status
+export interface VmiaClientStatus {
+  isInstalled: boolean;
+  isRunning: boolean;
+  container?: VmiaContainer;
+  totalEarned: string;
+  weeklyAverage: string;
+  lastPayout: string;
+  performance: {
+    cpu: number;
+    memory: number;
+    network: number;
+    tasks: number;
+  };
+}
+
+// Transaction history with pagination
+export interface TransactionHistory {
+  transactions: Transaction[];
+  totalCount: number;
+  hasMore: boolean;
+  nextCursor?: string;
+}
+
+// Real-time blockchain notification
+export interface BlockchainNotification {
+  type: "reward" | "system" | "update" | "security";
+  message: string;
+  timestamp: string;
+  read: boolean;
+  actionRequired?: boolean;
+}
+

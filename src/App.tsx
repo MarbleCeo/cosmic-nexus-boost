@@ -12,8 +12,17 @@ import DexPage from "./pages/DexPage";
 import CliPage from "./pages/CliPage";
 import ClientPage from "./pages/ClientPage";
 import NotFound from "./pages/NotFound";
+import VmiaClientApp from "./pages/VmiaClientApp";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 5000,
+      refetchOnWindowFocus: true,
+    },
+  }
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -29,6 +38,7 @@ const App = () => (
           <Route path="/dex" element={<DexPage />} />
           <Route path="/cli" element={<CliPage />} />
           <Route path="/client" element={<ClientPage />} />
+          <Route path="/app" element={<VmiaClientApp />} />
           <Route path="/settings" element={<ClientPage />} /> {/* Temporary redirect to client page */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

@@ -55,3 +55,20 @@ export interface Transaction {
   status: "confirmed" | "pending" | "failed";
   type: "transfer" | "swap" | "stake" | "unstake" | "vmia-reward";
 }
+
+// Solflare wallet type definitions
+export interface SolflareWallet {
+  connect: () => Promise<void>;
+  disconnect: () => void;
+  publicKey: {
+    toString: () => string;
+  };
+  isConnected: boolean;
+}
+
+// Extend Window interface to include solflare
+declare global {
+  interface Window {
+    solflare?: SolflareWallet;
+  }
+}

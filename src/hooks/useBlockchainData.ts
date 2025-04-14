@@ -1,6 +1,5 @@
-
 import { useQuery } from "@tanstack/react-query";
-import { BlockData, NetworkStats, NodeData, VmiaPerformance, TokenData, WalletInfo } from "@/types/blockchain";
+import { BlockData, NetworkStats, NodeData, VmiaPerformance, TokenData, WalletInfo, SolflareWallet } from "@/types/blockchain";
 import { useMemo, useState } from "react";
 
 async function fetchBlocks(): Promise<BlockData[]> {
@@ -44,7 +43,6 @@ async function fetchDexData(): Promise<TokenData[]> {
   return response.json();
 }
 
-// Mock implementation of the Solflare wallet connection
 export function useSolflareWallet() {
   const [connected, setConnected] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -57,15 +55,15 @@ export function useSolflareWallet() {
       setError(null);
       
       // Check if Solflare is installed
-      if (typeof window !== 'undefined' && 'solflare' in window) {
-        // @ts-ignore - Solflare is injected into the window object
+      if (typeof window !== 'undefined' && window.solflare) {
+        // Access the typed Solflare wallet
         const solflare = window.solflare;
         
         // Try to connect
         await solflare.connect();
         
         // Get the wallet info
-        const publicKey = await solflare.publicKey.toString();
+        const publicKey = solflare.publicKey.toString();
         
         setWallet({
           address: publicKey,
@@ -85,8 +83,7 @@ export function useSolflareWallet() {
   };
 
   const disconnect = () => {
-    if (typeof window !== 'undefined' && 'solflare' in window) {
-      // @ts-ignore
+    if (typeof window !== 'undefined' && window.solflare) {
       window.solflare.disconnect();
     }
     setConnected(false);
